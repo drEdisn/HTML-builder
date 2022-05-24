@@ -110,33 +110,27 @@ fs.mkdir(path.join(__dirname, 'project-dist'), {recursive: true}, (err) => {
     htmlBundle();
     cssBundle();
 
-    if (!path.join(__dirname, 'files-copy')) {
-      assetsCopy();
-    } else {
-      fs.readdir(path.join(__dirname, 'project-dist', 'assets'), 
-        (err, dirs) => {
-          if (err) {
-            throw err;
-          } else {
-            dirs.forEach(dir => {
-              fs.readdir(path.join(__dirname, 'project-dist', 'assets', `${dir}`),
-                (err, files) => {
-                  if (err) {
-                    throw err;
-                  } else {
-                    files.forEach(file => {
-                      fs.unlink(path.join(__dirname, 'project-dist', 'assets', `${dir}`, `${file}`), (err) => {if (err) {throw err;}});
-                    });
-                    assetsCopy();
-                  }
-                });
-            });
-          }
+    assetsCopy();
+    fs.readdir(path.join(__dirname, 'project-dist', 'assets'), 
+      (err, dirs) => {
+        if (err) {
+          throw err;
+        } else {
+          dirs.forEach(dir => {
+            fs.readdir(path.join(__dirname, 'project-dist', 'assets', `${dir}`),
+              (err, files) => {
+                if (err) {
+                  throw err;
+                } else {
+                  files.forEach(file => {
+                    fs.unlink(path.join(__dirname, 'project-dist', 'assets', `${dir}`, `${file}`), (err) => {if (err) {throw err;}});
+                  });
+                  assetsCopy();
+                }
+              });
+          });
         }
-      );
-    }
+      }
+    );
   }
 });
-
-
-

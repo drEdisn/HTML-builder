@@ -22,17 +22,19 @@ const copyFiles = () => {
   });
 };
 
-if (!path.join(__dirname, 'files-copy')) {
-  copyFiles();
-} else {
-  fs.readdir(path.join(__dirname, 'files-copy'), (err, files) => {
-    if (err) {
-      throw err;
-    } else {
-      files.forEach(file => {
-        fs.unlink(path.join(__dirname, 'files-copy', `${file}`), (err) => {if (err) {throw err;}});
-      });
-      copyFiles();
-    }
-  });
-}
+fs.stat(path.join(__dirname, 'files-copy'), (err) => {
+  if (!err) {
+    fs.readdir(path.join(__dirname, 'files-copy'), (err, files) => {
+      if (err) {
+        throw err;
+      } else {
+        files.forEach(file => {
+          fs.unlink(path.join(__dirname, 'files-copy', `${file}`), (err) => {if (err) {throw err;}});
+        });
+        copyFiles();
+      }
+    });
+  } else {
+    copyFiles();
+  }
+});
