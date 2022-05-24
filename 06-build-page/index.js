@@ -44,7 +44,7 @@ const htmlBundle = () => {
           throw err;
         } else {
           files.forEach(file => {
-            if (file.isFile() === true && path.extname(file.name) == '.html') {
+            if (file.isFile() === true && path.extname(file.name) == '.html' && arr.includes(`${file.name.replace(/.html/, '')}`)) {
               let st = fs.createReadStream(path.join(__dirname, 'components', `${file.name}`), 'utf-8');
               st.on('data', i => {
                 arr.splice(arr.indexOf(`${file.name.replace(/.html/g, '')}`), 1, i);
