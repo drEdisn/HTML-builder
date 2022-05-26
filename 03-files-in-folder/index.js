@@ -15,7 +15,7 @@ const getFileInfo = (folder) => {
                 if (err) {
                   throw err;
                 } else { 
-                  console.log(`${file.name} - ${path.extname(file.name) ? path.extname(file.name) : null } - ${stats.size/1024} Кб`); 
+                  console.log(`${file.name.split('.')[0]} - ${path.extname(file.name) ? path.extname(file.name) : null } - ${stats.size/1024} Кб`); 
                 }
               }
             );
